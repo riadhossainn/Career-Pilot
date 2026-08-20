@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", "Instrument Sans", ui-sans-serif, sans-serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-950: #07111b;
+  --color-ink-900: #0a1926;
+  --color-ink-850: #0d2030;
+  --color-ink-800: #10283a;
+  --color-ink-700: #16344b;
+  --color-ink-600: #1e4560;
+  --color-ink-500: #2c5d7e;
+  --color-ink-400: #5e87a3;
+  --color-ink-300: #93b2c6;
+  --color-ink-200: #c4d6e2;
+  --color-ink-100: #e2ebf1;
+  --color-ink-50: #f0f5f8;
+
+  --color-mist-50: #f5f8f7;
+  --color-mist-100: #edf3f1;
+  --color-mist-200: #dee8e5;
+  --color-mist-300: #c7d6d2;
+
+  --color-signal-50: #fff1e9;
+  --color-signal-100: #ffe0ce;
+  --color-signal-200: #ffc29e;
+  --color-signal-300: #ff9c63;
+  --color-signal-400: #ff7a35;
+  --color-signal-500: #f4581c;
+  --color-signal-600: #d8470f;
+  --color-signal-700: #b23a0c;
+
+  --color-pine-50: #eaf4f3;
+  --color-pine-100: #d5e9e7;
+  --color-pine-200: #abd3d0;
+  --color-pine-400: #1a9a98;
+  --color-pine-500: #0e7c7b;
+  --color-pine-600: #0b6665;
+  --color-pine-700: #095250;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+  body {
+    background-color: var(--color-mist-50);
+    color: var(--color-ink-900);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-signal-200);
+    color: var(--color-ink-900);
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-200) transparent;
+  }
+}
+
+/* ---------- ambient backgrounds ---------- */
+.bg-grid-faint {
+  background-image:
+    linear-gradient(rgba(14, 124, 123, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 124, 123, 0.055) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+.bg-grid-dark {
+  background-image:
+    linear-gradient(rgba(147, 178, 198, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 178, 198, 0.07) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+.glow-decor::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 340px at 88% -60px, rgba(244, 88, 28, 0.09), transparent 65%),
+    radial-gradient(700px 420px at -120px 40%, rgba(14, 124, 123, 0.08), transparent 65%);
+  z-index: 0;
+}
+
+/* ---------- radar (auth + splash) ---------- */
+.radar-rings {
+  background:
+    repeating-radial-gradient(circle at center, transparent 0 34px, rgba(147, 178, 198, 0.16) 34px 35px);
+}
+.radar-sweep {
+  background: conic-gradient(
+    from 0deg,
+    rgba(244, 88, 28, 0) 0deg,
+    rgba(244, 88, 28, 0.45) 42deg,
+    rgba(244, 88, 28, 0) 62deg
+  );
+  animation: radar-sweep 4.2s linear infinite;
+}
+@keyframes radar-sweep {
+  to { transform: rotate(360deg); }
+}
+.radar-blip {
+  animation: radar-blip 4.2s ease-out infinite;
+}
+@keyframes radar-blip {
+  0%, 8% { opacity: 0; transform: scale(0.4); }
+  14% { opacity: 1; transform: scale(1); }
+  70% { opacity: 0.25; }
+  100% { opacity: 0; transform: scale(1.15); }
+}
+
+/* ---------- motion ---------- */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.8); }
+}
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.anim-fade-up { animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-fade-in { animation: fade-in 0.4s ease both; }
+.anim-pop { animation: pop-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-toast { animation: toast-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.d-1 { animation-delay: 0.05s; }
+.d-2 { animation-delay: 0.1s; }
+.d-3 { animation-delay: 0.16s; }
+.d-4 { animation-delay: 0.22s; }
+.d-5 { animation-delay: 0.28s; }
+
+.skeleton {
+  background: linear-gradient(100deg, var(--color-mist-100) 40%, #ffffff 50%, var(--color-mist-100) 60%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.gauge-arc {
+  transition: stroke-dashoffset 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
